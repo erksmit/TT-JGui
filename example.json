@@ -1,0 +1,73 @@
+[
+    {
+        "id": "JGui-example",
+        "type": "data",
+        "meta": {
+            "components": {
+                // let's define a custom component called coolMenu
+                "coolMenu": {
+                    // The base gui object type of the menu
+                    "type": "dialog", 
+
+                    // The arguments that can create the gui object
+                    "args": { 
+                        "width": 300,
+                        "height": 180
+
+                    },
+
+                    // Let's put some objects in the dialog's body
+                    "content": [
+                        // lets use the coolContent component, and a label
+                        {
+                            "type": "coolContent",
+                            // lets give coolContent some data to show
+                            "data": {
+                                "textContent": "woah",
+                                "labelHeight": 15
+                            }
+                        },
+
+                        {
+                            "type": "label",
+                            "args": {
+                                "text": "line 2",
+                                "height": 15
+                            }
+                        }
+                    ]
+                },
+
+                "coolContent": {
+                    "type": "layout",
+                    "args": {
+                        "vertical": true
+                    },
+                    // we can use the data table to define default values for our template values
+                    "data": {
+                        "textContent": "default content"
+                    },
+                    "content": [
+                        // let's put some labels in the layout
+                        {
+                            // types that dont have inner content dont need the args tag
+                            "type": "label",
+                            "args": {
+                                // we're gonna replace {template} with a value later
+                                "text": "{textContent}",
+                                "h": "{labelHeight}"
+                            }
+                        },
+                        {
+                            "type": "label",
+                            "args": {
+                                "text": "line 2",
+                                "height": 15
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]
