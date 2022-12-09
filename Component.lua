@@ -50,13 +50,17 @@ local function deepCopy(table, depth)
     return copy
 end
 
-Component.meta = {__index = Component}
+function Component.getCopy(name)
+    return deepCopy(Component.all[name])
+end
 
+Component.meta = {__index = Component}
 ---Creates a new component
 ---@param name string The name of the component.
 ---@param component table The table representing the component.
 ---@return component component The created component.
 function Component.new(name, component)
+    component.data = component.data or {}
     setmetatable(component, Component.meta)
     Component.all[name] = component
     return component
@@ -154,7 +158,7 @@ end
 local function resolveComponents(component)
     for _, child in pairs(component.content) do
         if not isSimpleType(child.type) then
-            child = Component.all[child.type]
+            child = Component.getCopy(child.type)
         end
     end
 end
