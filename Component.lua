@@ -7,15 +7,15 @@ local Component = {}
 Component.all = {}
 
 local types = {
-    ICON = "icon",
-    LISTBOX = "listBox",
-    BUTTON = "button",
-    TEXTFRAME = "textFrame",
-    LABEL = "label",
-    CANVAS = "canvas",
-    LAYOUT = "layout",
-    MENU = "menu",
-    DIALOG = "dialog"
+    ICON = 'icon',
+    LISTBOX = 'listBox',
+    BUTTON = 'button',
+    TEXTFRAME = 'textFrame',
+    LABEL = 'label',
+    CANVAS = 'canvas',
+    LAYOUT = 'layout',
+    MENU = 'menu',
+    DIALOG = 'dialog'
 }
 ---Returns whether a gui object type is a component type of a simple gui object type.
 ---@param type string The string type of the object.
@@ -37,11 +37,11 @@ local function deepCopy(table, depth)
     depth = depth or 0
     depth = depth + 1
     if depth > 50 then
-        error("Attempted to deep copy circular table references")
+        error('Attempted to deep copy circular table references')
     end
     local copy = {}
     for key, value in pairs(table) do
-        if type(value) == "table" then
+        if type(value) == 'table' then
             copy[key] = deepCopy(value, depth)
         else
             copy[key] = value
@@ -102,7 +102,7 @@ local function createComponent(component, root)
 
     else
         return root:addLabel{
-            text="Element does not have a known type"
+            text='Element does not have a known type'
         }
     end
 end
@@ -123,7 +123,7 @@ local function insertData(component, upperData)
     local data = {}
     if component.data then
         for key, value in pairs(component.data) do
-            data["{" + key + "}"] = value
+            data['{' + key + '}'] = value
         end
     end
 
@@ -140,7 +140,7 @@ local function insertData(component, upperData)
                 component.args[argKey] = dataValue
 
             -- substitute the key in the string
-            elseif type(dataValue == "string") and type(argValue) == "string" then
+            elseif type(dataValue == 'string') and type(argValue) == 'string' then
                 component.args[argKey] = string.gsub(argValue, dataKey, dataValue)
             end
         end

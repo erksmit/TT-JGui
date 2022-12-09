@@ -78,3 +78,68 @@ Now we get into the fun stuff, a component can define another component in its c
 
 ## Rendering
 In order to render a component you loaded you can us JGui.getComponent to get a copy of your component template which you can then fill with data. In order to render the component object you can call component:render() on it and pass it the root gui object which you would like to attach it to. You can also use the JGui.renderComponent shorthand which will get the component for you, insert the data you passed and attach it to the passed gui root or GUI.root if you omitted the argument.
+
+## Full example
+Below is a full example json and script that makes use of the features the JGui module offers, it omits some menial args like width and height for the components.
+#### json
+```jsonc
+[{
+    "id": "JGui-example",
+    "type": "script",
+    "script": "script.lua",
+    "meta": {
+        "components": {
+            "coolListEntry": {
+                "type": "layout",
+                "content": [
+                    {
+                        "type": "button",
+                        "args": {
+                            "onClick": "{onClick}"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}]
+```
+#### lua
+```lua
+-- use whatever path is needed here
+local JGui = require("TT-Jgui.JGui")
+
+function script:init()
+    -- lets load the components we defined
+    local draft = script:getDraft()
+    JGui.LoadDraft(draft)
+end
+
+function script:buildCityGui()
+    -- let's get the component we loaded and put some data into it.
+    local myComponent = JGui.getComponent('coolListEntry')
+    myComponent.data = {
+        onClick = function ()
+            Debug.toast('woah the button has been clicked')
+        end
+    }
+
+    -- lets create a dialog to attach our component to
+    local ourDialog = GUI.createDialog{
+        icon = Icon.SETTINGS,
+        title = 'Title',
+        text = 'Text'
+    }
+
+    -- lets render myComponent in the dialog's content
+    myComponent:render(ourDialog.content)
+
+    -- we can also use the shorthand method if we want to do it all in 1 go
+    local data = {
+        onClick = function ()
+            Debug.toast('woah the button has been clicked')
+        end
+    }
+    JGui.renderComponent('coolListEntry', ourDialog.content, data)
+end
+```
