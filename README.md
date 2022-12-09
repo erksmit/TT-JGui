@@ -4,7 +4,7 @@ This article assumes you have basic knowledge of scripting and that you have goo
 
 ## Components
 JGui uses objects called components to handle the information about a gui template, below is a basic json definition of a component.
-```json
+```jsonc
 // This is the identifying name of the component.
 "coolComponent": {
     // This is the gui object type of the component, top level objects can be layout, dialog or menu.
@@ -30,7 +30,7 @@ This table can then be loaded using JGui.loadComponent(). The JGui module also p
 
 ## Data in components
 Simple templates are fine, but we're gonna want to be able to insert our data into the component templates. We can do this by defining a field in the args table with a value of "{identifier}". We can later replace this value by putting a key called "identifier" in the component's "data" table.
-```json
+```jsonc
 "someComponent": {
     "type": "label",
     "args": {
@@ -48,7 +48,7 @@ Data values inherit through diffrent components, the uppermost component's data 
 
 ## Chaining components
 Now we get into the fun stuff, a component can define another component in its content.
-```json
+```jsonc
 [
     // some extra tables like args have been omitted for simplicity
     "coolMenu": {
