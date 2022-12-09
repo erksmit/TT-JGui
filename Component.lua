@@ -56,13 +56,20 @@ end
 
 Component.meta = {__index = Component}
 ---Creates a new component
----@param name string The name of the component.
+---@param name string? The name of the component.
 ---@param component table The table representing the component.
 ---@return component component The created component.
 function Component.new(name, component)
     component.data = component.data or {}
     setmetatable(component, Component.meta)
-    Component.all[name] = component
+    if component.content then
+        for _, child in pairs(component.content) do
+            child = Component.new(nil, child)
+        end
+    end
+    if name ~= nil then
+        Component.all[name] = component
+    end
     return component
 end
 
